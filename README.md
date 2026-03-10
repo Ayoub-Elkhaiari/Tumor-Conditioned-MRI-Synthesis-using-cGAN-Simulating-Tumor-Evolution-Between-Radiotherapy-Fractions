@@ -1,4 +1,4 @@
-# Tumor-Conditioned MRI Synthesis for Radiotherapy Digital Twins using Conditional GAN
+# Tumor-Conditioned MRI Synthesis using Conditional GAN: Simulating Tumor Evolution Between Radiotherapy Fractions
 
 > A conditional GAN that synthesizes realistic brain MRI slices conditioned on evolved tumor
 > segmentation masks, simulating tumor state changes between radiotherapy treatment fractions.
@@ -81,7 +81,8 @@ All classes binarized to a single tumor mask for conditioning.
 
 Three biologically-motivated operators simulate tumor state changes between fractions:
 
-![Tumor Evolution](assets/tumor_evolution.png)
+<img width="1314" height="985" alt="image" src="https://github.com/user-attachments/assets/ff201d13-a668-4167-8b0f-71b20c9eb225" />
+
 
 | Operator | Implementation | Biological Meaning | Probability |
 |---|---|---|---|
@@ -197,11 +198,8 @@ Conv(512→1)  → patch output (30×30)
 
 4-panel visualization: Input MRI (T) | Evolved Mask (T+1) | Generated MRI (T+1) | Real MRI
 
-![Qualitative Results Shrinkage](assets/qualitative_shrinkage.png)
+<img width="1352" height="1965" alt="image" src="https://github.com/user-attachments/assets/2c6c01e0-f120-4f6b-9f84-9ff44182f5a0" />
 
-![Qualitative Results Growth](assets/qualitative_growth.png)
-
-![Qualitative Results Necrosis](assets/qualitative_necrosis.png)
 
 Generated MRI is visually nearly indistinguishable from real MRI across all three
 evolution types after only 10 epochs of training.
@@ -214,13 +212,18 @@ Signed difference maps (Generated − Real) overlaid with tumor boundary contour
 Errors concentrate at tumor boundaries — consistent with high-frequency structural
 detail being hardest to learn.
 
-![Difference Maps](assets/difference_maps.png)
+<img width="1790" height="1137" alt="image" src="https://github.com/user-attachments/assets/60d93a61-f2eb-47bc-8c64-914ae2187853" />
+
+<img width="788" height="490" alt="image" src="https://github.com/user-attachments/assets/946b9039-08cc-4302-bdba-46762ad5a375" />
 
 ---
 
 ## Training Curves
 
-![Training Curves](assets/training_curves.png)
+<img width="1352" height="1377" alt="image" src="https://github.com/user-attachments/assets/0a14fe6e-e9fc-4f09-ad69-cb8ca3f7d2d4" />
+
+<img width="1582" height="887" alt="image" src="https://github.com/user-attachments/assets/2a57b951-7829-4cc4-ac5a-dd365a4c6720" />
+
 
 - L1 loss converges rapidly from epoch 1
 - SSIM climbs to 0.993 within 10 epochs
@@ -231,7 +234,8 @@ detail being hardest to learn.
 
 ## Metrics Table
 
-![Metrics Bar Chart](assets/metrics_bar.png)
+<img width="1389" height="495" alt="image" src="https://github.com/user-attachments/assets/a3cf17ff-d536-4e43-88be-7438d6875716" />
+
 
 Full per-mode comparison showing MAE, SSIM, and PSNR across shrinkage, growth, and necrosis.
 
@@ -263,35 +267,6 @@ The notebook will automatically:
 4. Train Generator + Discriminator
 5. Evaluate all 12 metrics on the test set
 6. Generate all visualizations
-
----
-
-## Relevance to Radiotherapy Digital Twins
-
-This project directly implements a core component of the **digital twin framework** for
-personalized radiotherapy planning:
-
-```
-┌─────────────────────────────────────────────────────────┐
-│              Digital Twin Treatment Loop                 │
-│                                                          │
-│  MRI(T) ──→ Segment ──→ Tumor Model ──→ Evolve Mask    │
-│                                              │           │
-│                                              ▼           │
-│  Plan(T+1) ←── pCT/pPET ←── cGAN Synthesize MRI(T+1)  │
-└─────────────────────────────────────────────────────────┘
-```
-
-**Key connections to TwinCaRT PhD project:**
-
-- **Pseudo-MRI synthesis** — this project generates synthetic MRI reflecting tumor evolution,
-  a core requirement of the digital twin imaging pipeline
-- **Tumor-state conditioning** — the model takes segmentation masks as conditions,
-  directly modeling the tumor evolution model → image synthesis link
-- **Multi-fraction planning** — the iterative loop (evolve → synthesize → plan → repeat)
-  mirrors the MR-Linac adaptive radiotherapy workflow
-- **Transferability** — methodology applies directly to prostate MRI, pseudo-CT (MRI→CT),
-  and pseudo-PET synthesis with minimal architectural changes
 
 ---
 
