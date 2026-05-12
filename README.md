@@ -48,7 +48,7 @@ demonstrates that a conditional GAN can learn this mapping directly from data, p
 high-fidelity synthetic MRI that reflects biologically meaningful tumor changes.
 
 The methodology is directly transferable to:
-- Prostate MRI (the target anatomy of the TwinCaRT PhD project)
+- Prostate MRI 
 - Pseudo-CT synthesis from MRI
 - Pseudo-PET synthesis from MRI
 
